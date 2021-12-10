@@ -9,6 +9,7 @@ software=(
     hyper
     elixir
     git
+    nvm
 )
 
 gitUsername="ClarkAllen1556"
@@ -71,7 +72,15 @@ for sf in "${software[@]}"; do
             echo ">> Git config"
             git config --global -l
         ;;
+        nvm)
+            if command -v nvm &> /dev/null
+            then
+                echo ">> nvm already installed > skip"
+                continue
+            fi
 
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+        ;;
     esac
 
     duration=$SECONDS
