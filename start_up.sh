@@ -51,8 +51,8 @@ for sf in "${software[@]}"; do
             # solarized theme
             echo ">> Setting theme"
             hyper i hyper-solarized-light
-            echo ">> Setting prompt"
             # prompt
+            echo ">> Setting prompt"
             echo "\n PROMPT=\"%B%F{1}%n%f%b%F{8}@%f%F{24}%m%f%B%F{8}%d%f%b%F{8}:~$%f \"" >> ${ZDOTDIR:-~}/.zshrc
         ;;
         elixir)
