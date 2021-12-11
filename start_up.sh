@@ -10,6 +10,7 @@ software=(
     elixir
     git
     nvm
+    pgadmin4
 )
 
 gitUsername="ClarkAllen1556"
@@ -80,6 +81,15 @@ for sf in "${software[@]}"; do
             fi
 
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+        ;;
+        pgadmin4)
+            if command -v pgadmin4 &> /dev/null
+            then
+                echo ">> pgadmin already installed > skip"
+                continue
+            fi
+
+            brew install --cask pgadmin4
         ;;
     esac
 
