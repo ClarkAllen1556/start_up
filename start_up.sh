@@ -11,6 +11,9 @@ software=(
     git
     nvm
     pgadmin4
+    dash
+    neovim
+    sublime-text
 )
 
 gitUsername="ClarkAllen1556"
@@ -18,13 +21,23 @@ gitEmail="allenclark@u.boisestate.edu"
 
 echo ">> Setting following needed software:"  ${software[*]}
 
+isInstalled () {
+    if which -s $1; then
+        true
+    elif brew ls --cask $1 &> /dev/null; then # if there is no console command check brew casks
+        true
+    else
+        false
+    fi
+}
+
 for sf in "${software[@]}"; do
     SECONDS=0
     echo ">> Installing" $sf
+
     case $sf in
         homebrew)
-            if command -v brew &> /dev/null
-            then
+            if isInstalled brew; then
                 echo ">> Homebrew already installed > skip"
                 continue
             fi
@@ -32,8 +45,7 @@ for sf in "${software[@]}"; do
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         ;;
         asdf)
-            if command -v asdf &> /dev/null
-            then
+            if isInstalled asdf; then
                 echo ">> ASDF already installed > skip"
                 continue
             fi
@@ -42,8 +54,7 @@ for sf in "${software[@]}"; do
             echo "\n. $(brew --prefix asdf)/libexec/asdf.sh" >> ${ZDOTDIR:-~}/.zshrc
         ;;
         hyper)
-            if command -v hyper &> /dev/null
-            then
+            if isInstalled hyper; then
                 echo ">> ASDF already installed > skip"
                 continue
             fi
@@ -58,8 +69,7 @@ for sf in "${software[@]}"; do
             echo "\n PROMPT=\"%B%F{1}%n%f%b%F{8}@%f%F{24}%m%f%B%F{8}%d%f%b%F{8}:~$%f \"" >> ${ZDOTDIR:-~}/.zshrc
         ;;
         elixir)
-            if command -v elixir &> /dev/null
-            then
+            if isInstalled elixir; then
                 echo ">> elixir already installed > skip"
                 continue
             fi
@@ -74,22 +84,44 @@ for sf in "${software[@]}"; do
             git config --global -l
         ;;
         nvm)
-            if command -v nvm &> /dev/null
-            then
-                echo ">> nvm already installed > skip"
-                continue
-            fi
+            # if nvm -v &> /dev/null; then # which -s nvm doesn't return path
+            #     echo ">> nvm already installed > skip"
+            #     continue
+            # fi
 
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
         ;;
         pgadmin4)
-            if command -v pgadmin4 &> /dev/null
-            then
+            if isInstalled pgadmin4; then
                 echo ">> pgadmin already installed > skip"
                 continue
             fi
 
             brew install --cask pgadmin4
+        ;;
+        dash)
+            if isInstalled dash; then
+                echo ">> dash already installed > skip"
+                continue
+            fi
+
+            brew install --cask dash
+        ;;
+        neovim)
+            if isInstalled nvim; then # command is different from package name
+                echo ">> neovim already installed > skip"
+                continue
+            fi
+
+            brew install neovim
+        ;;
+        sublime-text)
+            if isInstalled subl; then # command is different from package name
+                echo ">> sublime already installed > skip"
+                continue
+            fi
+
+            brew install --cask sublime-text
         ;;
     esac
 
